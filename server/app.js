@@ -3,12 +3,22 @@ const app = require('fastify')({
     prettyPrint: true
   }
 })
+require('dotenv').config()
+const mongoose = require('mongoose')
 const schema = require('./schema/schema')
 const { graphiqlFastify, graphqlFastify } = require('fastify-graphql')
+
+// Mongoose
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
+mongoose.connection.once('open', (err) => {
+  err ? app.log.error(err) : app.log.info('Connected to database')
+})
+
+// Graphql Routes
 app.register(graphqlFastify, {
   prefix: '/graphql',
   graphql: {
-    schema
+    schema: schema
   }
 })
 app.register(graphiqlFastify, {
