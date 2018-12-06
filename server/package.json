@@ -4,15 +4,19 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "client": "npm run start --prefix ../client",
+    "server": "nodemon app.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "concurrently": "^4.1.0",
     "dotenv": "^6.1.0",
     "event-stream": "^3.3.4",
     "fastify": "^1.13.0",
+    "fastify-cors": "^0.2.0",
     "fastify-graphql": "^4.0.1",
     "graphql": "^14.0.2",
     "lodash": "^4.17.11",
